@@ -13,12 +13,9 @@ export default class ExpressRoutes {
 
         express.post("/chatwootMessage", async (req, res) => {
             try {
-                //const chatwootMessage: ChatwootMessage = humps.camelizeKeys(req.body);
-                const token = req.query.token;
                 const chatwootMessage = req.body;
                 const chatwootAPI: ChatwootAPI = chatwootAPIMap[chatwootMessage.inbox.id];
 
-                //validate we have a chatwootAPI and whatsapp web client configured for this inbox
                 if (chatwootAPI == null) {
                     res.status(400).json({
                         result: "API Client not found for this inbox. Verify Chatwoot Whatsapp Web service configuration.",
@@ -27,17 +24,8 @@ export default class ExpressRoutes {
                     return;
                 }
 
-                //quick authentication with chatwoot api key
-                if (token != chatwootAPI.config.authToken) {
-                    res.status(401).json({
-                        result: "Unauthorized access. Please provide a valid token.",
-                    });
-
-                    return;
-                }
-
                 const whatsappWebClientState = await chatwootAPI.whatsapp.client.getState();
-                //post to whatsapp only if we are connected to the client and message is not private
+
                 if (
                     whatsappWebClientState === "CONNECTED" &&
                     chatwootMessage.inbox.id == chatwootAPI.config.whatsappWebChatwootInboxId &&
@@ -83,7 +71,7 @@ export default class ExpressRoutes {
                                 ) {
                                     whatsappMentions.push(contact);
                                     formattedMessage = formattedMessage.replace(mention, `@${participant.id.user}`);
-                                    break; //we continue with next mention since we found our contact and there's no need to keep searching
+                                    break;
                                 }
                             }
                         }
@@ -117,7 +105,8 @@ export default class ExpressRoutes {
                 }
 
                 res.status(200).json({ result: "message_sent_succesfully" });
-            } catch {
+            } catch (e) {
+                console.log(e)
                 res.status(400).json({ result: "exception_error" });
             }
         });

@@ -2,9 +2,9 @@ import express from "express";
 import React from "react";
 import { render } from "ink";
 import App from "./components/app";
+import morgan from "morgan";
 import bootstrap from "./core/bootstrap";
 
-// run a bootstrap function once to perform an app-wide initialization
 bootstrap().then(() => {
     const expressApp = express();
 
@@ -15,9 +15,9 @@ bootstrap().then(() => {
         })
     );
 
-    // init api server
+    expressApp.use(morgan("dev"));
+
     const server = expressApp.listen(process.env.PORT ?? "", () => {
-        // on success, render our App react component
         render(<App express={expressApp} server={server} />);
     });
 });
