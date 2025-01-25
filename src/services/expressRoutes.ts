@@ -90,20 +90,36 @@ export default class ExpressRoutes {
                     }
 
                     if (messageData.attachments != null && messageData.attachments.length > 0) {
-                        console.log("is media", messageData.attachments[0].data_url);
-                        const media = await MessageMedia.fromUrl(messageData.attachments[0].data_url);
+                        let imageUrl = messageData.attachments[0].data_url;
+                    
+                        // Verificar si la variable de entorno está definida
+                        if (process.env.URL_REPLACE) {
+                            try {
+                                // Crear un objeto URL para manipular fácilmente la URL
+                                const urlObject = new URL(imageUrl);
+                    
+                                // Reemplazar el dominio con el valor de la variable de entorno
+                                const newBaseUrl = process.env.URL_REPLACE;
+                                const newUrl = new URL(urlObject.pathname, newBaseUrl).toString();
+                    
+                                // Asignar la nueva URL
+                                imageUrl = newUrl;
+                            } catch (error) {
+                                console.error("Error al procesar la URL:", error);
+                            }
+                        }
+                    
+                        // Usar la URL procesada para obtener el contenido multimedia
+                        const media = await MessageMedia.fromUrl(imageUrl);
+                    
                         if (formattedMessage != null) {
                             options.caption = formattedMessage;
                         }
-
-                        console.log(messageData.attachments[0].data_url);
-
-                        console.log({ media, options });
-
+                    
                         messageContent = media;
                     } else {
                         messageContent = formattedMessage;
-                    }
+                    }                    
 
                     if (messageContent != null) {
                         console.log({ to, messageContent, options });
