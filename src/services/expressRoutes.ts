@@ -90,6 +90,7 @@ export default class ExpressRoutes {
                     }
 
                     if (messageData.attachments != null && messageData.attachments.length > 0) {
+                        console.log("is media");
                         const media = await MessageMedia.fromUrl(messageData.attachments[0].data_url);
                         if (formattedMessage != null) {
                             options.caption = formattedMessage;
@@ -101,6 +102,7 @@ export default class ExpressRoutes {
                     }
 
                     if (messageContent != null) {
+                        console.log("sending message");
                         chatwootAPI.whatsapp.client.sendMessage(to, messageContent, options);
                     }
                 }
