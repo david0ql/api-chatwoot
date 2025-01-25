@@ -96,17 +96,24 @@ export default class ExpressRoutes {
                             options.caption = formattedMessage;
                         }
 
+                        console.log(messageData.attachments[0].data_url);
+
+                        console.log({ media, options });
+
                         messageContent = media;
                     } else {
                         messageContent = formattedMessage;
                     }
 
                     if (messageContent != null) {
+                        console.log({ to, messageContent, options });
                         console.log("sending message");
                         chatwootAPI.whatsapp.client.sendMessage(to, messageContent, options);
+                        console.log("message sent");
                     }
                 }
 
+                console.log("message_sent_succesfully");
                 res.status(200).json({ result: "message_sent_succesfully" });
             } catch (e) {
                 console.log(e);
