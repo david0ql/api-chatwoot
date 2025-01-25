@@ -90,7 +90,7 @@ export default class ExpressRoutes {
                     }
 
                     if (messageData.attachments != null && messageData.attachments.length > 0) {
-                        console.log("is media");
+                        console.log("is media", messageData.attachments[0].data_url);
                         const media = await MessageMedia.fromUrl(messageData.attachments[0].data_url);
                         if (formattedMessage != null) {
                             options.caption = formattedMessage;
