@@ -106,7 +106,7 @@ export default class ExpressRoutes {
 
                 res.status(200).json({ result: "message_sent_succesfully" });
             } catch (e) {
-                console.log(e)
+                console.log(e);
                 res.status(400).json({ result: "exception_error" });
             }
         });
