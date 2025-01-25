@@ -14,6 +14,7 @@ export default class ExpressRoutes {
         express.post("/chatwootMessage", async (req, res) => {
             try {
                 const chatwootMessage = req.body;
+                console.log(chatwootMessage.inbox.id, 'chatwootMessage.inbox.id');
                 const chatwootAPI: ChatwootAPI = chatwootAPIMap[chatwootMessage.inbox.id];
 
                 if (chatwootAPI == null) {

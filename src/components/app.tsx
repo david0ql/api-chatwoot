@@ -63,6 +63,7 @@ const App = (props: AppProps) => {
                 pendingInitWhatsappClients.push(whatsappClient);
 
                 const chatwootAPI: ChatwootAPI = new ChatwootAPI(chatwootConfig, whatsappClient);
+                console.log(`Chatwoot API initialized for account: ${account.id}, inbox: ${whatsappWebInbox.id}`);
                 chatwootAPIMap[whatsappWebInbox.id] = chatwootAPI;
             }
         }
