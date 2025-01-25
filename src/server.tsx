@@ -1,6 +1,7 @@
 import express from "express";
 import React from "react";
 import { render } from "ink";
+import cors from "cors";
 import App from "./components/app";
 import morgan from "morgan";
 import bootstrap from "./core/bootstrap";
@@ -14,6 +15,8 @@ bootstrap().then(() => {
             extended: true,
         })
     );
+
+    expressApp.use(cors());
 
     expressApp.use(morgan("dev"));
 
