@@ -79,14 +79,18 @@ export default class ExpressRoutes {
                         options.mentions = whatsappMentions;
                     }
 
-                    if (chatwootAPI.config.prefixAgentNameOnMessages) {
-                        let senderName = chatwootMessage.sender?.name;
-                        if (chatwootMessage.conversation.messages != null && chatwootMessage.conversation.messages.length > 0) {
-                            const sender = chatwootMessage.conversation.messages[0].sender;
-                            senderName = sender.available_name ?? sender.name;
+                    if (chatwootAPI?.config?.prefixAgentNameOnMessages) {
+                        let senderName = chatwootMessage?.sender?.name || "";
+
+                        if (
+                            chatwootMessage?.conversation?.messages &&
+                            chatwootMessage.conversation.messages.length > 0
+                        ) {
+                            const sender = chatwootMessage.conversation.messages[0]?.sender;
+                            senderName = sender?.available_name || sender?.name || "";
                         }
 
-                        formattedMessage = `${senderName}: ${formattedMessage ?? ""}`;
+                        formattedMessage = `${senderName}: ${formattedMessage || ""}`;
                     }
 
                     if (messageData.attachments != null && messageData.attachments.length > 0) {
