@@ -82,10 +82,7 @@ export default class ExpressRoutes {
                     if (chatwootAPI?.config?.prefixAgentNameOnMessages) {
                         let senderName = chatwootMessage?.sender?.name || "";
 
-                        if (
-                            chatwootMessage?.conversation?.messages &&
-                            chatwootMessage.conversation.messages.length > 0
-                        ) {
+                        if (chatwootMessage?.conversation?.messages && chatwootMessage.conversation.messages.length > 0) {
                             const sender = chatwootMessage.conversation.messages[0]?.sender;
                             senderName = sender?.available_name || sender?.name || "";
                         }
