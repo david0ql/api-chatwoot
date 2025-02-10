@@ -87,7 +87,11 @@ export default class ExpressRoutes {
                             senderName = sender?.available_name || sender?.name || "";
                         }
 
-                        formattedMessage = `${senderName}: ${formattedMessage || ""}`;
+                        if (senderName == "") {
+                            formattedMessage = `${formattedMessage || ""}`;
+                        } else {
+                            formattedMessage = `${senderName}: ${formattedMessage || ""}`;
+                        }
                     }
 
                     if (messageData.attachments != null && messageData.attachments.length > 0) {
